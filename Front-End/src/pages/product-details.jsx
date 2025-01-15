@@ -1,10 +1,11 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import SummaryAPI from "../common";
 import { FaStar, FaStarHalf } from "react-icons/fa";
 import displayPKRCurrency from "../helpers/displayCurrency";
 import ZoomImage from "../components/zoom-image";
 import Recommendedproduct from "../components/recomended-product";
+import Context from "../context";
 
 const productdetails = () => {
   const [data, setData] = useState({
@@ -23,6 +24,13 @@ const productdetails = () => {
   const [fullScreenImage, setfullScreenImage] = useState("");
   const [openFullScreenImage, setopenFullScreenImage] = useState(false);
   const productImageListLoading = new Array(4).fill(null);
+
+  const { fetchUserProductCount } = useContext(Context);
+
+  const handleAddToCart = async (e, id) => {
+    await addToCart(e, id);
+    fetchUserProductCount();
+  };
 
   const fetchProductDetails = async () => {
     setloading(true);
@@ -165,7 +173,7 @@ const productdetails = () => {
                 </button>
                 <button
                   className="border-2 border-red-600 rounded px-3 py-1 min-w-[120px] font-medium text-white bg-red-600 hover:text-red-600 hover:bg-white"
-                  // onClick={(e) => handleAddToCart(e, data?._id)}
+                  onClick={(e) => handleAddToCart(e, data?._id)}
                 >
                   Add To Cart
                 </button>

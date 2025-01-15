@@ -1,9 +1,10 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useRef, useState } from "react";
 import fetchCategoryWiseProduct from "../helpers/fetchCategoryWiseProduct";
 import displayCurrency from "../helpers/displayCurrency";
 import { FaAngleLeft, FaAngleRight } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import addToCart from "../helpers/addToCart";
+import Context from "../context";
 
 const horizontalproduct = ({ category, heading }) => {
   const [data, setData] = useState([]);
@@ -13,6 +14,13 @@ const horizontalproduct = ({ category, heading }) => {
   const [showLeftButton, setShowLeftButton] = useState(false);
   const [showRightButton, setShowRightButton] = useState(false);
   const scrollElement = useRef();
+
+  const { fetchUserProductCount } = useContext(Context)
+
+    const handleAddToCart = async(e,id)=>{
+       await addToCart(e,id)
+       fetchUserProductCount()
+    }
 
   const fetchData = async () => {
     setLoading(true);
@@ -127,7 +135,7 @@ const horizontalproduct = ({ category, heading }) => {
                     </div>
                     <button
                       className="text-sm bg-red-600 hover:bg-red-700 text-white px-3 py-0.5 rounded-full"
-                      onClick={(e) => addToCart(e, product?._id)}
+                      onClick={(e)=>handleAddToCart(e,product?._id)}
                     >
                       Add To Cart
                     </button>

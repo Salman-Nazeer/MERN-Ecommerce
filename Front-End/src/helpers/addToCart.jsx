@@ -5,10 +5,6 @@ const addToCard = async (e, id) => {
   e?.stopPropagation();
   e?.preventDefault();
 
-  const product = id;
-
-  console.log(product);
-
   const response = await fetch(SummaryAPI.addToCartProduct.url, {
     method: SummaryAPI.addToCartProduct.method,
     credentials: "include",

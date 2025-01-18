@@ -1,3 +1,5 @@
+import updateAddToCartProduct from "../../../Back-End/controller/User/updateAddToCartProduct";
+
 const backendDomin = "http://localhost:8080";
 
 const SummaryAPI = {
@@ -60,6 +62,10 @@ const SummaryAPI = {
   addToCartProductView: {
     url: `${backendDomin}/api/viewCartProduct`,
     method: "get",
+  },
+  updateCartProduct: {
+    url: `${backendDomin}/api/updateAddToCartProduct`,
+    method: "post",
   },
 };
 

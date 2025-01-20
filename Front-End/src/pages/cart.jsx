@@ -2,6 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import SummaryAPI from "../common";
 import Context from "../context";
 import displayPKRCurrency from "../helpers/displayCurrency";
+import { MdDelete } from "react-icons/md";
 
 const cart = () => {
   const [data, setData] = useState([]);
@@ -66,6 +67,24 @@ const cart = () => {
     }
   };
 
+  const deteleProduct = async (id) => {
+    console.log("id", id);
+    const response = await fetch(SummaryAPI.deleteCartProduct.url, {
+      method: SummaryAPI.deleteCartProduct.method,
+      credentials: "include",
+      headers: {
+        "Content-type": "application/json",
+      },
+      body: JSON.stringify({ _id: id }),
+    });
+
+    const responseData = await response.json();
+
+    if (responseData.success) {
+      fetchData();
+    }
+  };
+
   return (
     <div className="container mx-auto">
       <div className="text-center text-lg my-3">
@@ -100,8 +119,15 @@ const cart = () => {
                       />
                     </div>
 
-                    <div className="px-4 py-2">
-                      <h2 className="text-lg lg:text-xl text-ellipsis line-clamp-1">
+                    <div className="px-4 py-2 relative">
+                      {/* Delete Product */}
+                      <div
+                        className="absolute top-0 right-0 p-2 m-1 cursor-pointer text-red-600 hover:bg-red-600 hover:text-white rounded-full"
+                        onClick={() => deteleProduct(product?._id)}
+                      >
+                        <MdDelete />
+                      </div>
+                      <h2 className="text-lg lg:text-xl me-4 text-ellipsis line-clamp-1">
                         {product?.productId?.productName}
                       </h2>
                       <p className="capitalize text-slate-500">
@@ -140,7 +166,9 @@ const cart = () => {
           {loading ? (
             <div className="h-36 bg-slate-200 birder border-slate-300 animate-pulse"></div>
           ) : (
-            <div className="h-36 bg-slate-200">Total</div>
+              <div className="h-36 bg-slate-200">
+                <h2>Summary</h2>
+            </div>
           )}
         </div>
       </div>

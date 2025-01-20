@@ -29,6 +29,7 @@ const horizontalproduct = ({ category, heading }) => {
 
     setData(categoryProduct?.data);
   };
+  console.log("All Product", data)
 
   useEffect(() => {
     fetchData();
@@ -114,12 +115,12 @@ const horizontalproduct = ({ category, heading }) => {
                 >
                   <div className="bg-slate-200 h-full p-4 min-w-[120px] md:min-w-[145px]">
                     <img
-                      src={product.productImage[0]}
+                      src={product?.productImage[0]}
                       className="object-scale-down h-full w-full hover:scale-110 transition-all"
                     />
                   </div>
-                  <div className="p-4 grid gap-3">
-                    <h2 className="font-medium text-base md:text-lg text-ellipsis line-clamp-1 text-black">
+                  <div className="p-4 grid gap-1">
+                    <h2 className="font-medium  text-base md:text-lg text-ellipsis line-clamp-1 text-black">
                       {product?.productName}
                     </h2>
                     <p className="capitalize text-slate-500">

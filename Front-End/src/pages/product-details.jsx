@@ -6,6 +6,7 @@ import displayPKRCurrency from "../helpers/displayCurrency";
 import ZoomImage from "../components/zoom-image";
 import Recommendedproduct from "../components/recomended-product";
 import Context from "../context";
+import scrollTop from "../helpers/scrollTop";
 
 const productdetails = () => {
   const [data, setData] = useState({
@@ -51,7 +52,7 @@ const productdetails = () => {
 
   useEffect(() => {
     fetchProductDetails();
-    window.scrollTo(0, 0);
+    scrollTop();
   }, [param.id]);
 
   const handleMouseEnterProduct = (imgURL) => {

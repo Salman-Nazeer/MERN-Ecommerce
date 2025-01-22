@@ -90,7 +90,7 @@ const cart = () => {
     0
   );
   const totalPRICE = data.reduce(
-    (pre, curr) => pre +( curr.quantity * curr?.productId?.sellingPrice),
+    (pre, curr) => pre + curr.quantity * curr?.productId?.sellingPrice,
     0
   );
 
@@ -102,7 +102,7 @@ const cart = () => {
         )}
       </div>
 
-      <div className="flex flex-col lg:flex-row gap-10 lg:justify-between p-4">
+      <div className="flex flex-col lg:flex-row gap-5 lg:gap-10 lg:justify-between p-4">
         {/* ***** VIEW PRODUCT ***** */}
         <div className="w-full max-w-3xl">
           {loading
@@ -118,9 +118,9 @@ const cart = () => {
                 return (
                   <div
                     key={product?._id + "cart" + index}
-                    className="w-full bg-white h-32 my-2 border border-slate-300 rounded-md grid grid-cols-[128px,1fr]"
+                    className="w-full bg-white h-44 my-2 border border-slate-300 rounded-md grid grid-cols-[128px,1fr]"
                   >
-                    <div className="w-32 h-32 py-2 bg-slate-200">
+                    <div className="w-32 h-44 py-2 bg-slate-200">
                       <img
                         src={product?.productId?.productImage[0]}
                         className="w-full h-full object-scale-down mix-blend-multiply"
@@ -145,8 +145,8 @@ const cart = () => {
                       <div className="flex items-center justify-between ">
                         <p className="text-red-600 font-medium text-lg">
                           {displayPKRCurrency(product?.productId?.sellingPrice)}
-                        </p>{" "}
-                        <p className="text-slate-600 font-semibold text-lg">
+                        </p>
+                        <p className="hidden md:block text-slate-600 font-semibold text-lg">
                           {displayPKRCurrency(
                             product?.productId?.sellingPrice * product?.quantity
                           )}
@@ -171,6 +171,14 @@ const cart = () => {
                           +
                         </button>
                       </div>
+                      <div className="w-full mt-2 text-center">
+                        <p className="md:hidden text-slate-600 font-bold text-md ">
+                          Total Price{" "}
+                          {displayPKRCurrency(
+                            product?.productId?.sellingPrice * product?.quantity
+                          )}
+                        </p>
+                      </div>
                     </div>
                   </div>
                 );
@@ -178,7 +186,7 @@ const cart = () => {
         </div>
 
         {/* ******Summary***** */}
-        <div className="mt-5 lg:mt-0 w-full max-w-sm">
+        <div className="mt-5 lg:mt-7 w-full max-w-sm mx-auto">
           {loading ? (
             <div className="h-36 bg-slate-200 birder border-slate-300 animate-pulse"></div>
           ) : (
@@ -192,9 +200,11 @@ const cart = () => {
               <div className="flex items-center justify-between px-4 gap-2 text-lg text-slate-600 font-medium">
                 <p>Total Price</p>
                 <p>{displayPKRCurrency(totalPRICE)}</p>
-                </div>
-                
-                <button className="bg-blue-600 p-3 text-white w-full">Payment</button>
+              </div>
+
+              <button className="bg-blue-600 p-3 text-white w-full">
+                Payment
+              </button>
             </div>
           )}
         </div>

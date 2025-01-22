@@ -3,6 +3,7 @@ import Logo from "../logo";
 import { GrSearch } from "react-icons/gr";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
+import { MdLogout } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SummaryAPI from "../../common/index";
@@ -15,6 +16,7 @@ const header = () => {
   const user = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
   const [menuDisplay, setmenuDisplay] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
   const context = useContext(Context);
 
@@ -36,20 +38,19 @@ const header = () => {
     }
   };
 
-  const handleSearch = (e) => {
-    // e.preventDefault();
-    const { value } = e.target;
-    console.log(value)
-    if (value) {
-      navigate(`/search?query=${value}`);
-    } else {
-      navigate("/search")
-    }
+  const handleSearchChange = (e) => {
+    setSearchValue(e.target.value);
+  };
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    navigate(`/search?query=${searchValue}`);
+    setSearchValue("");
   };
 
   return (
     <header className="h-16 shadow-md bg-white fixed w-full z-50">
-      <div className="container h-full mx-auto flex items-center justify-between px-4">
+      <div className="container h-full mx-auto flex items-center justify-between px-2 md:px-4">
         {/* LOGO */}
         <div className="">
           <Link to={"/"}>
@@ -58,20 +59,27 @@ const header = () => {
         </div>
 
         {/* SEARCH */}
-        <div className="hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full pl-1 focus-within:shadow outline-none">
+        <form
+          onSubmit={handleSearchSubmit}
+          className="hidden lg:flex items-center w-full justify-between max-w-sm border rounded-full pl-1 focus-within:shadow outline-none"
+        >
           <input
             type="text"
-            placeholder="Search product ..."
+            value={searchValue}
+            onChange={handleSearchChange}
+            placeholder="Search products..."
             className="w-full outline-none px-1 rounded-l-full"
-            onChange={handleSearch}
           />
-          <div className="text-lg min-w-[50px] w-13 h-8 bg-red-600 flex items-center justify-center rounded-r-full text-white">
+          <button
+            type="submit"
+            className="text-lg min-w-[50px] w-13 h-8 bg-red-600 flex items-center justify-center rounded-r-full text-white"
+          >
             <GrSearch />
-          </div>
-        </div>
+          </button>
+        </form>
 
         {/* IMG/CARD ICON/BTN */}
-        <div className="flex items-center gap-7">
+        <div className="flex items-center gap-4 md:gap-7">
           <div className="relative flex justify-center">
             {user?._id && (
               <div
@@ -91,23 +99,6 @@ const header = () => {
               </div>
             )}
 
-            {/* That code in not correct it shows small box when clicked on admin profile */}
-            {/* {menuDisplay && (
-                  {user?.role === ROLE.ADMIN && (
-              <div className="hidden md:block absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded">
-                <nav>
-                    <Link
-                      to={"admin-panal"}
-                      className="whitespace-nowrap hover:bg-slate-200 p-2"
-                      onClick={() => setmenuDisplay((preve) => !preve)}
-                    >
-                      Admin Panel
-                    </Link>
-                </nav>
-              </div>
-                  )}
-            )} */}
-
             {user?.role === ROLE.ADMIN && menuDisplay && (
               <div className="hidden md:block absolute bg-white bottom-0 top-11 h-fit p-2 shadow-lg rounded">
                 <nav>
@@ -124,7 +115,7 @@ const header = () => {
           </div>
 
           {user?._id && (
-            <Link to={"/cart"} className="text-2xl relative">
+            <Link to={"/cart"} className="text-3xl relative">
               <span>
                 <FaShoppingCart />
               </span>
@@ -136,12 +127,21 @@ const header = () => {
 
           <div>
             {user?._id ? (
-              <button
-                onClick={handleLogout}
-                className="px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700 "
-              >
-                Logout
-              </button>
+              <>
+                <button
+                  onClick={handleLogout}
+                  className="hidden md:block px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700 "
+                >
+                  Logout
+                </button>
+
+                <button
+                  onClick={handleLogout}
+                  className="md:hidden text-xl px-3 py-1 rounded-full text-white bg-red-600 hover:bg-red-700 "
+                >
+                  <MdLogout />
+                </button>
+              </>
             ) : (
               <Link
                 to={"/login"}

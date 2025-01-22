@@ -15,12 +15,12 @@ const horizontalproduct = ({ category, heading }) => {
   const [showRightButton, setShowRightButton] = useState(false);
   const scrollElement = useRef();
 
-  const { fetchUserProductCount } = useContext(Context)
+  const { fetchUserProductCount } = useContext(Context);
 
-    const handleAddToCart = async(e,id)=>{
-       await addToCart(e,id)
-       fetchUserProductCount()
-    }
+  const handleAddToCart = async (e, id) => {
+    await addToCart(e, id);
+    fetchUserProductCount();
+  };
 
   const fetchData = async () => {
     setLoading(true);
@@ -29,7 +29,6 @@ const horizontalproduct = ({ category, heading }) => {
 
     setData(categoryProduct?.data);
   };
-  console.log("All Product", data)
 
   useEffect(() => {
     fetchData();
@@ -136,7 +135,7 @@ const horizontalproduct = ({ category, heading }) => {
                     </div>
                     <button
                       className="text-sm bg-red-600 hover:bg-red-700 text-white px-3 py-0.5 rounded-full"
-                      onClick={(e)=>handleAddToCart(e,product?._id)}
+                      onClick={(e) => handleAddToCart(e, product?._id)}
                     >
                       Add To Cart
                     </button>

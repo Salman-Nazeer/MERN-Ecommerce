@@ -15,7 +15,7 @@ const header = () => {
   const user = useSelector((state) => state?.user?.user);
   const dispatch = useDispatch();
   const [menuDisplay, setmenuDisplay] = useState(false);
-  const navigator = useNavigate();
+  const navigate = useNavigate();
   const context = useContext(Context);
 
   const handleLogout = async () => {
@@ -29,14 +29,24 @@ const header = () => {
     if (data.success) {
       toast.success(data.message);
       dispatch(setUserDetails(null));
-      navigator("/");
+      navigate("/");
     }
     if (data.error) {
       toast.error(data.message);
     }
   };
 
-  // console.log("Header add to cart count", context);
+  const handleSearch = (e) => {
+    // e.preventDefault();
+    const { value } = e.target;
+    console.log(value)
+    if (value) {
+      navigate(`/search?query=${value}`);
+    } else {
+      navigate("/search")
+    }
+  };
+
   return (
     <header className="h-16 shadow-md bg-white fixed w-full z-50">
       <div className="container h-full mx-auto flex items-center justify-between px-4">
@@ -53,6 +63,7 @@ const header = () => {
             type="text"
             placeholder="Search product ..."
             className="w-full outline-none px-1 rounded-l-full"
+            onChange={handleSearch}
           />
           <div className="text-lg min-w-[50px] w-13 h-8 bg-red-600 flex items-center justify-center rounded-r-full text-white">
             <GrSearch />

@@ -23,7 +23,6 @@ const searchProduct = async (req, res) => {
       success: true,
       error: false,
     });
-    console.log("query", query);
   } catch (err) {
     res.status(400).json({
       message: err?.message || err,

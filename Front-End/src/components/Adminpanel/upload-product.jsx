@@ -44,7 +44,6 @@ const uploadproduct = ({ onClose, fetchData }) => {
   };
 
   const handleDeleteProductImage = async (index) => {
-    console.log("image index", index);
 
     const deleteProductImage = [...data.productImage];
     deleteProductImage.splice(index, 1);
@@ -62,7 +61,6 @@ const uploadproduct = ({ onClose, fetchData }) => {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("data", data);
 
     const productUploadResponse = await fetch(SummaryAPI.upload_product.url, {
       method: SummaryAPI.upload_product.method,

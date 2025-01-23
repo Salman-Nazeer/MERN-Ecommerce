@@ -8,7 +8,6 @@ const searchProduct = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  console.log("query", query.search);
 
   const fetchProduct = async () => {
     setLoading(true);
@@ -16,7 +15,6 @@ const searchProduct = () => {
     const dataResponse = await response.json();
     setLoading(false);
 
-    console.log("dataResponse", dataResponse);
     setData(dataResponse.data);
   };
 

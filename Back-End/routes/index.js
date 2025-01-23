@@ -23,6 +23,7 @@ import addTocartViewProduct from "../controller/User/addToCartViewProduct.js";
 import updateAddToCartProduct from "../controller/User/updateAddToCartProduct.js";
 import deleteAddToCart from "../controller/User/deleteAddToCart.js";
 import searchProduct from "../controller/Product/searchProduct.js";
+import filterProduct from "../controller/Product/filterProduct.js";
 
 router.post("/signup", userSignUpController);
 router.post("/signin", userSignInController);
@@ -41,6 +42,7 @@ router.get("/get-categoryProduct", getCategoryProduct);
 router.post("/category-product", getCategoreWiseProduct);
 router.post("/product-details", getProductDetails);
 router.get("/searchProduct", searchProduct);
+router.post("/filter-product",filterProduct)
 
 // ADD TO CART
 router.post("/addtocart", authToken, addToCartController);

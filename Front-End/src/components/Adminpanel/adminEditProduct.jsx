@@ -45,7 +45,6 @@ const adminEditProduct = ({ onClose, productData, fetchData }) => {
   };
 
   const handleDeleteProductImage = async (index) => {
-    console.log("image index", index);
 
     const deleteProductImage = [...data.productImage];
     deleteProductImage.splice(index, 1);
@@ -63,7 +62,6 @@ const adminEditProduct = ({ onClose, productData, fetchData }) => {
   }
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("data", data);
 
     const productUploadResponse = await fetch(SummaryAPI.product_update.url, {
       method: SummaryAPI.product_update.method,

@@ -4,7 +4,7 @@ import { GrSearch } from "react-icons/gr";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import { MdLogout } from "react-icons/md";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import SummaryAPI from "../../common/index";
 import { toast } from "react-toastify";
@@ -19,6 +19,10 @@ const header = () => {
   const [searchValue, setSearchValue] = useState("");
   const navigate = useNavigate();
   const context = useContext(Context);
+  // const searchInput = useLocation();
+  // const URLSearch = new URLSearchParams(searchInput?.search);
+  // const searchQuery = URLSearch.getAll("q");
+  // const [search, setSearch] = useState(searchQuery);
 
   const handleLogout = async () => {
     const fetchData = await fetch(SummaryAPI.logout.url, {

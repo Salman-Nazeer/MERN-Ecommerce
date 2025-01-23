@@ -3,7 +3,6 @@ import addToCartModel from "../../models/cartProductModel.js";
 async function addTocartViewProduct(req, res) {
   try {
     const currentUser = req.userId;
-    // console.log("currentUser", currentUser);
 
     const allProducts = await addToCartModel
       .find({
@@ -11,7 +10,6 @@ async function addTocartViewProduct(req, res) {
       })
       .populate("productId");
 
-    // console.log("allProducts", allProducts);
     res.status(200).json({
       message: "All Products",
       data: allProducts,

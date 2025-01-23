@@ -8,7 +8,8 @@ const cart = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const context = useContext(Context);
-  const loadingCart = new Array(context.cartProductCount).fill(null);
+  // const loadingCart = new Array(context.cartProductCount).fill(null);
+  const loadingCart = new Array(4).fill(null);
 
   const fetchData = async () => {
     const response = await fetch(SummaryAPI.addToCartProductView.url, {
@@ -23,11 +24,17 @@ const cart = () => {
 
     if (responseData.success) {
       setData(responseData.data);
+      context.fetchUserProductCount();
     }
   };
 
+  const handleLoading = async () => {
+    await fetchData();
+  };
+
   useEffect(() => {
-    fetchData();
+    setLoading(true);
+    handleLoading();
     setLoading(false);
   }, []);
 
@@ -68,7 +75,6 @@ const cart = () => {
   };
 
   const deteleProduct = async (id) => {
-    console.log("id", id);
     const response = await fetch(SummaryAPI.deleteCartProduct.url, {
       method: SummaryAPI.deleteCartProduct.method,
       credentials: "include",

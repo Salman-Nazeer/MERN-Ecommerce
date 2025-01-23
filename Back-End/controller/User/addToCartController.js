@@ -5,12 +5,9 @@ async function addToCart(req, res) {
     const { productId } = req?.body;
     const currentUser = req.userId;
 
-    console.log("Received productId:", productId);
-    console.log("Current userId:", currentUser);
 
     const isProductAvailable = await addToCartModel.findOne({ productId });
 
-    console.log("isProductAvailabl   ", isProductAvailable);
 
     if (isProductAvailable) {
       return res.json({

@@ -15,8 +15,6 @@ const products = () => {
 
     const dataResponse = await response.json();
 
-    console.log("Product Data", dataResponse);
-
     setAllProduct(dataResponse?.data || []);
   };
 

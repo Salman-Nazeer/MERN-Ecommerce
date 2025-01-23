@@ -7,6 +7,7 @@ import ZoomImage from "../components/zoom-image";
 import Recommendedproduct from "../components/recomended-product";
 import Context from "../context";
 import scrollTop from "../helpers/scrollTop";
+import addToCard from "../helpers/addToCart";
 
 const productdetails = () => {
   const [data, setData] = useState({
@@ -29,7 +30,7 @@ const productdetails = () => {
   const { fetchUserProductCount } = useContext(Context);
 
   const handleAddToCart = async (e, id) => {
-    await addToCart(e, id);
+    await addToCard(e, id);
     fetchUserProductCount();
   };
 
@@ -58,6 +59,10 @@ const productdetails = () => {
   const handleMouseEnterProduct = (imgURL) => {
     setActiveImage(imgURL);
   };
+
+  // const handleAddToCart = async () => {
+  //   await
+  // }
 
   return (
     <div className="container mx-auto p-4">

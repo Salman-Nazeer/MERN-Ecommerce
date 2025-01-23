@@ -20,7 +20,6 @@ async function userSignInController(req, res) {
 
     const checkPassword = await bcrypt.compare(password, user.password);
 
-    console.log("checkPassword", checkPassword);
 
     if (checkPassword) {
       const tokenData = {
@@ -31,7 +30,6 @@ async function userSignInController(req, res) {
         expiresIn: 60 * 60 * 8,
       });
 
-      console.log('Generated JWT Token:', token);
 
       const tokenOption = {
         // httpOnly: true,

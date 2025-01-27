@@ -1,0 +1,16 @@
+{
+    "versin" : 2,
+    "name" : "Full Stack",
+    "builds" : [
+        {
+        "src" : "./index.js",
+        "dest" : "@vercel/node"
+        }
+    ],
+    "routes" : [
+        {
+            "src" : "./(.*)",
+            "dest" : "/"
+        }
+    ]
+}

@@ -1,15 +1,15 @@
 {
-    "versin" : 2,
-    "name" : "Full Stack",
+    "version" : 2,
+    "name" : "E-commercer",
     "builds" : [
         {
-        "src" : "./index.js",
-        "dest" : "@vercel/node"
+            "src" : "./index.js",
+            "use" : "@vercel/node"
         }
     ],
     "routes" : [
         {
-            "src" : "./(.*)",
+            "src" : "/(.*)",
             "dest" : "/"
         }
     ]

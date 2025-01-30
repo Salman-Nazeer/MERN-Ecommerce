@@ -1,6 +1,4 @@
-import updateAddToCartProduct from "../../../Back-End/controller/User/updateAddToCartProduct";
-
-const backendDomin = process.env.BACK_END_URL  //"http://localhost:8080";
+const backendDomin = import.meta.env.BACK_END_URL;
 
 const SummaryAPI = {
   signUp: {

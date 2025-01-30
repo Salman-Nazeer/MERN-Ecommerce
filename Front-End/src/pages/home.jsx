@@ -40,8 +40,8 @@ const home = () => {
         heading={"Trimmers"}
       />
       <VerticalCardProduct
-        category={"watches"}
-        heading={"Watch"}
+        category={"Processor"}
+        heading={"Processor"}
       />
     </div>
   );

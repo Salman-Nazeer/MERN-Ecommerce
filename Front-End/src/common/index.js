@@ -1,4 +1,4 @@
-const backendDomin = import.meta.env.BACK_END_URL;
+const backendDomin = import.meta.env.VITE_BACK_END_URL;
 
 const SummaryAPI = {
   signUp: {

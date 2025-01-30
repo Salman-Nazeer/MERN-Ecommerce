@@ -20,7 +20,6 @@ async function userSignInController(req, res) {
 
     const checkPassword = await bcrypt.compare(password, user.password);
 
-
     if (checkPassword) {
       const tokenData = {
         _id: user._id,
@@ -30,13 +29,10 @@ async function userSignInController(req, res) {
         expiresIn: 60 * 60 * 8,
       });
 
-
       const tokenOption = {
-        // httpOnly: true,
-        // secure: true,
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
-        sameSite: 'strict',
+        secure: true,
+        sameSite: "None",
       };
       res.cookie("token", token, tokenOption).status(200).json({
         message: "User login successfully",

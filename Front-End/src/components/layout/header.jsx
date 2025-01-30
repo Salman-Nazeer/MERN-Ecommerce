@@ -1,5 +1,4 @@
 import React, { useContext, useState } from "react";
-import Logo from "../logo";
 import { GrSearch } from "react-icons/gr";
 import { FaRegCircleUser } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
@@ -11,6 +10,7 @@ import { toast } from "react-toastify";
 import { setUserDetails } from "../../store/userSlice";
 import ROLE from "../../common/role";
 import Context from "../../context";
+import EShopmartLogo from "../logo";
 
 const header = () => {
   const user = useSelector((state) => state?.user?.user);
@@ -58,7 +58,7 @@ const header = () => {
         {/* LOGO */}
         <div className="">
           <Link to={"/"}>
-            <Logo w={90} h={50} />
+            <EShopmartLogo w={90} h={50} />
           </Link>
         </div>
 

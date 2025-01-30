@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import productCategory from "../helpers/productCategory.jsx";
-import CategroyWiseProductDisplay from "../components/categoryWiseProductDesplay.jsx";
 import VerticalCard from "../components/verticalCard.jsx";
 import SummaryAPI from "../common/index.js";
 
 const categoryProduct = () => {
+  const [showFilters, setShowFilters] = useState(false);
   const param = useParams();
   const navigate = useNavigate();
   const [data, setData] = useState([]);
@@ -92,13 +92,30 @@ const categoryProduct = () => {
   };
 
   return (
-    <div className="container mx-auto p-4 ">
-      {/*  DESKTOP VERSION */}
-      <div className="hidden lg:grid grid-cols-[200px,1fr]">
-        {/* LEFT SIDE */}
-        <div className="bg-white p-2 min-h-[calc(100vh-120px)] overflow-y-scroll">
-          {/* SORT BY */}
-          <div className="">
+    <div className="container mx-auto p-4">
+      {/* Mobile Filter Toggle Button */}
+      <button
+        className="md:hidden bg-gray-200 px-3 py-1  rounded text-gray-700"
+        onClick={() => setShowFilters(!showFilters)}
+      >
+        {showFilters ? "Hide Filters" : "Show Filters"}
+      </button>
+
+      <div className="grid grid-cols-1 md:grid-cols-[250px,1fr] gap-4">
+        {/* LEFT SIDE FILTERS - Responsive Sidebar */}
+        <div
+          className={`bg-white p-2 min-h-[calc(100vh-120px)] overflow-y-auto transition-transform transform ${
+            showFilters ? "translate-x-0" : "-translate-x-full"
+          } fixed top-0 left-0 w-64 h-full md:relative md:translate-x-0 md:w-full md:h-auto md:block z-50 shadow-md md:shadow-none`}
+        >
+          <button
+            className="md:hidden absolute top-2 right-2 text-red-600"
+            onClick={() => setShowFilters(false)}
+          >
+            ✕
+          </button>
+
+          <div>
             <h3 className="text-base uppercase font-medium text-slate-500 pb-1 border-b border-slate-300">
               Sort by
             </h3>
@@ -111,7 +128,7 @@ const categoryProduct = () => {
                   checked={sortBy === "asc"}
                   onChange={handleOnChangeSortBy}
                   id="Low-to-High"
-                  value={"asc"}
+                  value="asc"
                 />
                 <label htmlFor="Low-to-High">Price - Low to High</label>
               </div>
@@ -123,51 +140,48 @@ const categoryProduct = () => {
                   checked={sortBy === "dsc"}
                   onChange={handleOnChangeSortBy}
                   id="High-to-Low"
-                  value={"dsc"}
+                  value="dsc"
                 />
                 <label htmlFor="High-to-Low">Price - High to Low</label>
               </div>
             </form>
           </div>
 
-          {/**filter by */}
-          <div className="">
+          <div>
             <h3 className="text-base uppercase font-medium text-slate-500 border-b pb-1 border-slate-300">
               Category
             </h3>
 
             <form className="text-sm flex flex-col gap-2 py-2">
-              {productCategory.map((categoryName, index) => {
-                return (
-                  <div
-                    key={categoryName + index}
-                    className="flex items-center gap-3"
-                  >
-                    <input
-                      type="checkbox"
-                      name={"category"}
-                      checked={selectCategory[categoryName?.value] || false}
-                      value={categoryName?.value}
-                      id={categoryName?.value}
-                      onChange={handleSelectCategory}
-                    />
-                    <label htmlFor={categoryName?.value}>
-                      {categoryName?.label}
-                    </label>
-                  </div>
-                );
-              })}
+              {productCategory.map((categoryName, index) => (
+                <div
+                  key={categoryName.value + index}
+                  className="flex items-center gap-3"
+                >
+                  <input
+                    type="checkbox"
+                    name="category"
+                    checked={selectCategory[categoryName.value] || false}
+                    value={categoryName.value}
+                    id={categoryName.value}
+                    onChange={handleSelectCategory}
+                  />
+                  <label htmlFor={categoryName.value}>
+                    {categoryName.label}
+                  </label>
+                </div>
+              ))}
             </form>
           </div>
         </div>
 
-        {/* RIGHT SIDE (product) */}
-        <div className="px-4">
+        {/* RIGHT SIDE (Product Display) */}
+        <div className="">
           <p className="font-medium text-slate-800 text-lg my-2">
             Search Results : {data.length}
           </p>
 
-          <div className="min-h-[calc(100vh-120px)] overflow-y-scroll max-h-[calc(100vh-120px)]">
+          <div className="min-h-[calc(100vh-120px)] scrollbar-none overflow-y-auto max-h-[calc(100vh-120px)] pb-10">
             {data.length !== 0 && !loading && (
               <VerticalCard data={data} loading={loading} />
             )}

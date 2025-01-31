@@ -5,9 +5,10 @@ async function addToCart(req, res) {
     const { productId } = req?.body;
     const currentUser = req.userId;
 
-
-    const isProductAvailable = await addToCartModel.findOne({ productId });
-
+    const isProductAvailable = await addToCartModel.findOne({
+      productId,
+      userId: currentUser,
+    });
 
     if (isProductAvailable) {
       return res.json({

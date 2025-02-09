@@ -1,10 +1,36 @@
 import React, { useState } from "react";
-import { MdModeEditOutline } from "react-icons/md";
+import { MdModeEditOutline, MdDelete } from "react-icons/md";
 import AdminEditProduct from "./adminEditProduct";
 import displayPKRCurrency from "../../helpers/displayCurrency";
+import SummaryAPI from "../../common";
+import { toast } from "react-toastify";
 
 const adminProductCard = ({ data, fetchData }) => {
   const [editProduct, setEditProduct] = useState(false);
+
+  const handleDeleteProduct = async () => {
+    try {
+      const response = await fetch(SummaryAPI.delete_product.url, {
+        method: SummaryAPI.delete_product.method,
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ productId: data._id }),
+      });
+
+      const responseData = await response.json();
+
+      if (responseData.success) {
+        toast.success(responseData.message);
+        fetchData(); // Refresh the product list
+      } else {
+        toast.error(responseData.message);
+      }
+    } catch (error) {
+      toast.error("Failed to delete product");
+    }
+  };
+
   return (
     <div className="bg-white p-4 rounded ">
       <div className="w-32 flex flex-col h-full">
@@ -19,11 +45,26 @@ const adminProductCard = ({ data, fetchData }) => {
 
         <p className="font-semibold">{displayPKRCurrency(data?.price)}</p>
 
-        <div
+        {/* <div
           className="w-fit ml-auto mt-auto p-2 bg-green-100 hover:bg-green-600 mb-0 rounded-full cursor-pointer hover:text-white"
           onClick={() => setEditProduct(true)}
         >
           <MdModeEditOutline />
+        </div> */}
+
+        <div className="flex justify-between mt-auto">
+          <div
+            className="p-2 bg-green-100 hover:bg-green-600 mb-0 rounded-full cursor-pointer hover:text-white"
+            onClick={() => setEditProduct(true)}
+          >
+            <MdModeEditOutline />
+          </div>
+          <div
+            className="p-2 bg-red-100 hover:bg-red-600 mb-0 rounded-full cursor-pointer hover:text-white"
+            onClick={handleDeleteProduct}
+          >
+            <MdDelete />
+          </div>
         </div>
       </div>
 

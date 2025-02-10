@@ -11,11 +11,12 @@ cloudinary.v2.config({
 const deleteProduct = async (req, res) => {
   try {
     const { productId } = req.body;
+    console.log("Received request to delete product with ID:", productId);
 
-    // Find the product to get the image public IDs
+    // Find the product to get the image URLs
     const product = await ProductModel.findById(productId);
-    console.log("product Id", product);
     if (!product) {
+      console.log("Product not found for ID:", productId);
       return res.status(404).json({
         message: "Product not found",
         success: false,
@@ -23,33 +24,32 @@ const deleteProduct = async (req, res) => {
       });
     }
 
-    // Extract the productImage array
+    // Extract the productImages array
     const productImages = product.productImage;
-    console.log("productImages", productImages);
+    console.log("Product images to delete:", productImages);
 
-    // Delete images from Cloudinary one by one
-    const imageDeletionPromises = productImages.map((imageUrl) => {
-      // Extract public ID from URL
-      const publicId = imageUrl.split("/").slice(-3).join("/").split(".")[0];
-      console.log("Extracted publicId:", publicId);
-      return cloudinary.v2.uploader
-        .destroy(publicId)
-        .then((result) => {
-          console.log(`Deleted ${publicId}:`, result);
-          return result;
-        })
-        .catch((error) => {
-          console.error(`Error deleting ${publicId}:`, error);
-          throw error;
-        });
+    // Extract public IDs from image URLs
+    const publicIds = productImages.map((imageUrl) => {
+      // Split the URL by '/' and get the last segment
+      const lastSegment = imageUrl.split("/").pop();
+
+      // Remove the file extension to get the public ID
+      const publicId = lastSegment.split(".").slice(0, -1).join(".");
+
+      console.log(publicId);
+      return publicId;
     });
 
-    await Promise.all(imageDeletionPromises);
+    // Delete images from Cloudinary
+    const deleteResponse = await cloudinary.v2.api.delete_resources(publicIds);
+    console.log("Cloudinary delete response:", deleteResponse);
 
     // Delete the product from the database
     const deleteResult = await ProductModel.deleteOne({ _id: productId });
+    console.log("Database delete result:", deleteResult);
 
     if (deleteResult.deletedCount === 0) {
+      console.log("Failed to delete product from database for ID:", productId);
       return res.status(404).json({
         message: "Product not found",
         success: false,
@@ -57,6 +57,10 @@ const deleteProduct = async (req, res) => {
       });
     }
 
+    console.log(
+      "Product and associated images deleted successfully for ID:",
+      productId
+    );
     res.status(200).json({
       message: "Product and images deleted successfully",
       success: true,

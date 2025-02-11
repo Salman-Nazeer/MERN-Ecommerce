@@ -32,8 +32,8 @@ const adminProductCard = ({ data, fetchData }) => {
   };
 
   return (
-    <div className="bg-white p-4 rounded h-fit">
-      <div className="w-32 flex flex-col h-full">
+    <div className="bg-white p-4 rounded h-72 flex flex-col">
+      <div className="w-32 flex flex-col flex-grow">
         <div className="w-32 h-36 flex justify-center items-center">
           <img
             src={data?.productImage[0]}
@@ -45,14 +45,7 @@ const adminProductCard = ({ data, fetchData }) => {
 
         <p className="font-semibold">{displayPKRCurrency(data?.price)}</p>
 
-        {/* <div
-          className="w-fit ml-auto mt-auto p-2 bg-green-100 hover:bg-green-600 mb-0 rounded-full cursor-pointer hover:text-white"
-          onClick={() => setEditProduct(true)}
-        >
-          <MdModeEditOutline />
-        </div> */}
-
-        <div className="flex justify-end gap-3 mt-2">
+        <div className="flex justify-end gap-3 w-fit ml-auto mt-auto">
           <div
             className="p-2 bg-green-100 hover:bg-green-600 mb-0 rounded-full cursor-pointer hover:text-white"
             onClick={() => setEditProduct(true)}
